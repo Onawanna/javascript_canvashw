@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Drawing on a Canvas !</title>
+	<meta name = 'viewport' content='width=device-width, initial-scale=1, minimum-scale=1'>
+	<style>
+	canvas {
+				border: 4px solid #531046;
+				background-color: #bdc1c2;
+			}
+
+	body, html {
+		width: 100%;
+		height: 100%;
+		background-color: #60541c ;
+	}
+/* media queries for mobile screen response */
+	@media screen and (max-width:700px) {
+	}
+	</style>
+</head>
+<body>
+
+	<canvas id="canvas">
+
+	</canvas>
+	<input type="color" id="colorPicker">
+	<script> // Javascript
+		var canvas = document.querySelector('canvas');
+		var ctx = canvas.getContext('2d');
+		var x = 0;
+		var y = 0;
+		var radius = 15;
+		var color = 'red'
+		function draw() {
+			ctx.beginPath();
+			ctx.fillStyle = color;
+			ctx.arc(x, y, radius, 0, 2*Math.PI);
+			ctx.fill();
+		}
+		//listener for mouse movement across canvas ( also drawing circle at mouse location)
+		window.addEventListener('mousemove', function(e) {
+			console.log(e.pageX);
+			console.log(e.pageY);
+			x = e.pageX;
+			y = e.pageY;
+			draw()
+		})
+
+		//make canvas width 80%
+		function sizingCanvas() {
+			canvas.width = window.innerWidth * 0.8;
+			canvas.height = window.innerHeight * 0.8;
+		}
+		window.addEventListener('resize', sizingCanvas); // change width when resized
+		window.addEventListener('load', sizingCanvas); // change to size when laoded
+
+		window.addEventListener('keydown', function(e){ //change color and size on key press
+			console.log(e.keyCode)
+			if (e.keyCode === 66) { // aka b
+				color = "blue";}
+			if (e.keyCode === 89) { // aka y
+				color = "yellow";
+			}
+			if (e.keyCode === 71) { // aka g
+				color = "green";
+			}
+			if (e.keyCode === 82) { // aka r
+				color = 'red';
+			}
+			if (e.keyCode === 38) { // aka plus key
+				radius += 5;
+			}
+			if (e.keyCode === 40) { // aka minus key
+				if (radius >= 5) {
+					radius -= 5;
+				}
+			}
+			if (e.keyCode === 32) {
+				ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas with space bar
+			}
+			draw()
+		})
+
+		canvas.addEventListener("touchmove", function(e) { //add mobile touch option
+			var startX = e.touches[0].pageX;
+			var startY = e.touches[0].pageY;
+			x = startX;
+			y = startY;
+			draw();
+		})
+
+		canvas.addEventListener("orientationchange", function(e){ //add clearing function on mobile orientation
+						ctx.clearRect(0, 0, canvas.width, canvas.height);
+				})
+
+		var picker = document.querySelector("#colorPicker"); // add color picker
+                    picker.addEventListener("change", function(e){
+                        color=picker.value;
+
+			})
+
+	</script>
+
+</body>
+</html>
