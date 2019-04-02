@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Canvas Example</title>
+	<style type="text/css">
+		canvas{
+			border: 1px solid black;
+		}
+		body, html {
+			width: 100%;
+			height: 100%;
+}
+
+@media screen and (max-width: 700px) {
+}
+	</style>
+
+
+</head>
+<body>
+	<h1>Canvas Example</h1>
+	<canvas id="canvas" width="500" height="300">
+</canvas>
+<script>
+var canvas = document.querySelector("canvas");
+var ctx = canvas.getContext("2d");
+var x = 0;
+var y = 0;
+var color = "red"
+var radius = 20;
+
+function draw(x, y, radius, color){
+	ctx.beginPath();
+	ctx.arc(x, y, radius, 0, 2 * Math.PI);
+	ctx.fillStyle=color;
+	ctx.fill();
+	}
+
+/* Set mouse to move */
+window.addEventListener('mousemove', function (e){
+console.log(e.pageX);
+console.log(e.pageY);
+x = e.pageX;
+y = e.pageY;
+draw(e.pageX,e.pageY,radius, color)
+})
+/* Set up responsive canvas to 80percent */
+/*console.log(window)*/
+function sizingcanvas(){
+	canvas.width = window.innerWidth * 0.8;
+	canvas.height = window.innherHeight * 0.8;
+}
+
+window.addEventListener('resize', sizingCanvas);
+window.addEventListener('load', sizingCanvas);
+/*var width = window.innerWidth;
+var height = window.innerHeight;
+var cwidth = (.80 * width)
+var cheight =(.80 * height)*/
+
+/*document.querySelector("canvas").width = cwidth
+document.querySelector("canvas").height = cheight
+//draw();
+
+
+/* Set movement tracking to on touch */
+
+/*window.addEventListener('mousemove', function (e){
+console.log(e.pageX);
+console.log(e.pageY);
+draw(e.pageX,e.pageY,radius, color)
+})*/
+
+/*change color of pen by key */
+window.addEventListener('keypress', function (e){
+		console.log(e.key);
+		if (e.key == "b"){
+			 color = "blue"
+}
+		if (e.key == "g"){
+			 color = "green"
+}
+		if (e.key == "r"){
+		 	color = "red"
+}
+		if (e.key == "y"){
+		 	color = "yellow"
+}
+		if (e.key == "y"){
+			color = "yellow"
+}
+
+})
+
+/* change mouse radius */
+window.addEventListener('keyup', function (e)
+{
+	console.log(e.keyCode);
+		if(e.keyCode== "38") {
+			radius = radius + 5
+		}
+		else if(e.keyCode=="40"){
+			if (radius > 1) {
+				radius = radius - 5
+			}
+	}
+		else if(e.keyCode=="32"){
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			}
+})
+
+canvas.addEventListener("ontouchmove", function(e){
+	var startX = e.touches[0].pageX;
+	var StartY = e.touches[0].pageY;
+	x = startX;
+	y = startY;
+	draw();
+})
+
+
+
+
+</script>
+
+
+</body>
+</html>
